@@ -1,0 +1,287 @@
+
+//定義開始
+
+li{
+    list-style: none;
+}
+
+
+
+// 色の定義
+$themeColor :#51a800;
+$color : #797979;
+
+//定義終了
+
+// Header.js スタイリング
+
+.header {
+    position: fixed;
+    width : 100%;
+    height: 70px;
+    border: $themeColor solid 1px;
+    z-index : 100;
+    text-align: center;
+
+    .header-about-txt{
+        position: absolute;
+        top : 24px;
+        left: 46px;
+    }
+
+    .header-contact-btn {
+        position: absolute;
+        top : 11px;
+        right: 5%;
+        background: $color;
+        width: 277px;
+        height: 47px;
+        border-radius: 49px;
+        cursor: pointer;
+
+        .header-contact-txt {
+            position: absolute;
+            top : 11px;
+            right: 92px;
+            color: white;
+        }
+    }
+}
+
+// Container.js スタイリング
+
+.container {
+    position: relative;
+    top : 70px;
+    height: 800px;
+    width: auto;
+    margin: 0 auto;
+    border: $themeColor solid 2px;
+    background-color: white;
+
+    .container-canvas{
+        position: relative;
+        top : 0;
+        margin: 0 auto;
+        height: 800px;
+        width: 1600px;
+        border: green 2px dotted;
+    }
+    //***ここからロゴのスタイリング
+    @keyframes logoRotate {
+        from{
+            transform: rotate(0deg);
+        }
+        to{
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes logoDisAmime {
+        0%{
+            transform: scale(1.2);
+        }
+        90%{
+            transform: scale(0.1);
+        }
+        100%{
+            display: none;
+        }
+    }
+    &-logo {
+        position: absolute;
+        top : 180px;
+        left : 750px;
+        right: 750px;
+        margin: 0 auto;
+        width: 100px;
+        cursor: pointer;
+        animation-name: logoRotate;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: cubic-bezier();
+    }
+    &-logo-false {
+        display: none;
+    }
+    &-logo:hover{
+        animation-name: none;
+        transform: scale(1.2);
+    }
+    //***ここから冒頭の挨拶文のスタイリング
+    @keyframes welcomefeedIn {
+        0%{
+            opacity: 0;
+            color : $themeColor;
+        }
+        75%{
+            opacity: 1;
+            color: $themeColor;
+        }
+        100%{
+            opacity: 0;
+            color : $themeColor;
+        }
+    }
+    &-greeting {
+        position: absolute;
+        top: 303px;
+        left : 736px;
+        width: auto;
+        font-size: 36px;
+        cursor: default;
+        color: $themeColor;
+        font-family: 'Times New Roman', Times, serif;
+        animation-name: welcomefeedIn;
+        animation-timing-function: ease;
+        animation-duration: 3s;
+        animation-delay: 1s;
+        animation-iteration-count: infinite;
+    }
+    &-greeting-false{
+        display: none;
+    }
+
+    //***ここからメニューのスタイリング
+    &-menu{
+        position: relative;
+        top: 527px;
+        left: 8px;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 24px;
+        border: $themeColor 1px solid;
+        width: 692px;
+        height: 265px;
+        z-index: 500;
+        
+    // ***メインメニューの選択項目
+        @for $i from 0 through 4 {
+            &-selector:nth-child(#{$i + 1}) > li{
+                margin-bottom: 20px;
+                width: 150px;
+                
+                // border: greenyellow 1px dotted;
+                transition: all  0.1s ease;
+                cursor: pointer;
+            }
+        }
+        
+        // ***引数のセレクター（class）をもとに、同プロパティを定義
+        @mixin containerMenuDiv ($containerSubmenuName) {
+            .#{$containerSubmenuName} , .#{$containerSubmenuName} li{
+                display: block;
+            }
+        }
+        // ***ホバー時に展開するサブメニューの発火の作成
+        @for $i from 0 through 4 {
+            &-selector li:nth-child(#{$i + 1}):hover{
+                border-bottom: solid 2px $themeColor;
+                // padding-left: 10px;
+                color: $themeColor;
+                @if $i == 0 {
+                    @include containerMenuDiv(container-submenu-character);
+                }@else if $i == 1{
+                    @include containerMenuDiv(container-submenu-items);
+                }@else if $i == 2{
+                    @include containerMenuDiv(container-submenu-status);
+                }@else if $i == 3{
+                    @include containerMenuDiv(container-submenu-skills);
+                }@else if $i == 4{
+                    @include containerMenuDiv(container-submenu-option);
+                }
+            }
+        }
+        
+        //***サブメニュー枠の定義
+
+        .container-submenu-character,
+        .container-submenu-items,
+        .container-submenu-status,
+        .container-submenu-skills,
+        .container-submenu-option{
+            display: none;
+            position: absolute;
+            top: 0px;
+            left: 170px;
+            margin: 0 px;
+            width: 300px;
+            height: 226px;
+            color: black;
+            border-radius: 15px;
+            padding: 20px 20px;
+            // border: #00A968 1px solid;
+            background: gray;
+
+            li{
+                font-size: 24px;
+                color: white;
+                display: none;
+                margin-bottom: 20px;
+                width: 150px;
+                cursor: pointer;
+                // border: greenyellow 1px dotted;
+            }
+        }     
+    }
+
+    // ここから表示画面のスタイリング
+    .container-leaf-bg{
+        position: absolute;
+        top: 0;
+        display: inline-flex;
+        flex-direction: column;
+        border: red solid 1px;
+        flex-wrap: wrap;
+        width: 1600px;
+        height: 800px;
+        .container-leaf-title{
+            position: relative;
+            top: 7px;
+            left: 7px; 
+            border: #51a800 1px solid;
+            width: 692px;
+            height: 65px;
+            z-index: 600;
+        }
+        .container-leaf-explanation{
+            position: relative;
+            top: 17px;
+            left: 7px; 
+            border: #51a800 1px solid;
+            width: 692px;
+            height: 428px;
+            z-index: 600;
+        }
+        .container-leaf-contents{
+            position: relative;
+            top: 7px;
+            left: 4px;
+            border: #51a800 1px solid;
+            width: 876px;
+            height: 783px;
+        }
+        
+    }
+    
+    
+    
+    
+}
+
+
+
+// Footer.js スタイリング
+
+.footer{
+    position: relative;
+    top : 54px;
+    padding: 0;
+    height: 150px;
+    background-color: black;
+    text-align: center;
+
+    .copy-right-mart{
+        color: white;
+        line-height: 150px;
+    }
+}
